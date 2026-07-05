@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title data-id="th-modified">Sen uchun sovg'a 💌</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Comfortaa:wght@500;700&family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FFF6EF;--peach:#FFE3D2;--blush:#FFD2D7;
+    --rose:#E25C7C;--berry:#C9305C;--gold:#F2B66B;
+    --ink:#4A2C39;--soft:#8A6470;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{height:100%}
+  body{
+    font-family:'Manrope',sans-serif;color:var(--ink);
+    background:linear-gradient(160deg,#FFF6EF 0%,#FFE7DA 45%,#FFD7DC 100%);
+    overflow:hidden;position:fixed;inset:0;
+    display:flex;align-items:center;justify-content:center;
+  }
+  #ambient{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+  .floaty{position:absolute;bottom:-40px;font-size:20px;opacity:.35;animation:rise linear forwards}
+  @keyframes rise{to{transform:translateY(-115vh) rotate(40deg);opacity:0}}
+  .stage{position:relative;z-index:5;width:100%;max-width:430px;height:100%;padding:26px 22px;display:flex;flex-direction:column}
+  .progress{display:flex;gap:9px;justify-content:center;margin-top:8px;height:22px}
+  .dot{font-size:16px;opacity:.3;transition:opacity .4s, transform .4s;transform:scale(.85)}
+  .dot.on{opacity:1;transform:scale(1.15)}
+  .card{flex:1;display:flex;flex-direction:column;justify-content:center;text-align:center}
+  .screen{animation:fadeUp .55s cubic-bezier(.2,.8,.2,1) both}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes fadeOut{to{opacity:0;transform:translateY(-18px)}}
+  .leaving{animation:fadeOut .3s ease forwards}
+  .hand{font-family:'Caveat',cursive;color:var(--rose);font-size:26px;font-weight:700;margin-bottom:14px;line-height:1}
+  h1{font-family:'Comfortaa',cursive;font-weight:700;font-size:30px;line-height:1.25;letter-spacing:-.5px;margin-bottom:14px}
+  .q{font-family:'Comfortaa',cursive;font-weight:700;font-size:25px;line-height:1.3;margin-bottom:22px}
+  .sub{font-size:15.5px;color:var(--soft);line-height:1.55;margin-bottom:30px;max-width:320px;margin-left:auto;margin-right:auto}
+  .options{display:flex;flex-direction:column;gap:13px;align-items:center}
+  .btn{width:100%;max-width:330px;font-family:'Manrope',sans-serif;font-weight:700;font-size:17px;padding:17px 20px;border:none;border-radius:20px;cursor:pointer;background:#fff;color:var(--ink);box-shadow:0 8px 22px rgba(201,48,92,.12);transition:transform .15s ease, box-shadow .2s ease, background .2s ease;position:relative}
+  .btn:active{transform:scale(.97)}
+  .btn-primary{background:linear-gradient(135deg,var(--rose),var(--berry));color:#fff;box-shadow:0 12px 26px rgba(201,48,92,.32);font-family:'Comfortaa',cursive;font-weight:700}
+  .btn-primary:active{transform:scale(.97)}
+  .btn-shy{transition:transform .28s cubic-bezier(.2,1.4,.4,1), opacity .35s ease}
+  .shake{animation:shake .4s}
+  @keyframes shake{0%,100%{rotate:0deg}20%{rotate:-5deg}40%{rotate:5deg}60%{rotate:-4deg}80%{rotate:4deg}}
+  #toast{position:fixed;left:50%;bottom:54px;transform:translateX(-50%) translateY(20px);z-index:40;background:var(--ink);color:#fff;font-weight:600;font-size:14px;padding:11px 18px;border-radius:30px;opacity:0;pointer-events:none;transition:opacity .3s, transform .3s;box-shadow:0 10px 30px rgba(0,0,0,.2);white-space:nowrap}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .reveal-hand{font-family:'Caveat',cursive;color:var(--berry);font-size:30px;font-weight:700;margin-bottom:8px}
+  .reveal-title{font-family:'Comfortaa',cursive;font-weight:700;font-size:27px;margin-bottom:22px}
+  .ticket{position:relative;background:#fff;border-radius:22px;box-shadow:0 18px 40px rgba(201,48,92,.22);padding:24px 22px 22px;max-width:340px;width:100%;margin:0 auto;text-align:left;overflow:hidden;animation:ticketIn .7s cubic-bezier(.2,.9,.2,1.1) .15s both}
+  @keyframes ticketIn{from{opacity:0;transform:translateY(40px) scale(.9)}to{opacity:1;transform:translateY(0) scale(1)}}
+  .ticket::before,.ticket::after{content:"";position:absolute;width:26px;height:26px;border-radius:50%;background:linear-gradient(160deg,#FFE7DA,#FFD7DC);top:50%}
+  .ticket::before{left:-13px;transform:translateY(-50%)}
+  .ticket::after{right:-13px;transform:translateY(-50%)}
+  .ticket-top{display:flex;align-items:center;gap:10px;padding-bottom:16px;border-bottom:2px dashed #F0CBD3}
+  .ticket-emoji{font-size:30px}
+  .ticket-brand{font-family:'Comfortaa',cursive;font-weight:700;font-size:19px;color:var(--berry)}
+  .ticket-brand small{display:block;font-family:'Manrope';font-weight:600;font-size:11px;letter-spacing:1.5px;color:var(--soft);text-transform:uppercase;margin-top:2px}
+  .ticket-rows{padding-top:16px;display:flex;flex-direction:column;gap:13px}
+  .row{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+  .row .lab{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--soft);font-weight:700}
+  .row .val{font-weight:800;font-size:16px;text-align:right}
+  .row .val.big{font-family:'Comfortaa',cursive}
+  .note{font-family:'Caveat',cursive;font-size:21px;color:var(--soft);text-align:center;margin-top:22px;line-height:1.3}
+  .replay{margin-top:22px;background:transparent;border:none;color:var(--soft);font-weight:600;font-size:13px;cursor:pointer;text-decoration:underline;font-family:'Manrope'}
+  .confetti{position:fixed;top:42%;left:50%;z-index:30;pointer-events:none;font-size:22px;will-change:transform,opacity}
+  @media (prefers-reduced-motion: reduce){*{animation-duration:.001s!important;transition-duration:.05s!important}.floaty{display:none}}
+</style>
+</head>
+<body>
+<div id="ambient"></div>
+<div id="toast"></div>
+<div class="stage">
+  <div class="progress" id="progress"></div>
+  <div class="card" id="card"></div>
+</div>
+<script>
+/* ============================================================
+   SOZLAMALAR — o'zingga moslab o'zgartir (ismlar, sana, film)
+   ============================================================ */
+const CONFIG = {
+  herName: "Oysham",
+  myName:  "Ibrohim",
+  place:   "Ha,albatta",
+  movie:   "Meni,kechir!!",
+  date:    "Seshanba kuni , 7-iyul",
+  time:    "10:30",
+};
+
+const SCREENS = [
+  {
+    type:"intro",
+    hand:"sen uchun, "+CONFIG.herName+" 💌",
+    title:"Kichkina kviz —<br>katta sir bilan",
+    sub:"Bir nechta savolga javob ber… lekin ehtiyot bo'l — ba'zi tugmalar injiq 😏",
+    cta:"Boshladik ✨"
+  },
+  {
+    q:"Seshanba kuni vaqting bormi?",
+    options:[
+      {t:"Ha, albatta bor 💘", ok:true},
+      {t:"Band bo'lishim mumkin 😴", ok:false},
+      {t:"Hmm, bilmadim 🤔", ok:false},
+    ]
+  },
+  {
+    q:"Ko`rishamizmi?",
+    options:[
+      {t:CONFIG.place+" 🏰", ok:true},
+      {t:"Yo`q, kechirasiz 🙈", ok:false},
+      {t:"Hech qachon", ok:false},
+    ]
+  },
+  {
+    q:"Ko`rishganimizda mani kechirasanmi ?",
+    options:[
+      {t:CONFIG.movie+" 🥰", ok:true},
+      {t:"O`ylab koraman 😏", ok:false},
+      {t:"Albatta yo`q 🙄", ok:false},
+    ]
+  },
+  {
+    q:"Shu kuni birga bolamizmi ?",
+    options:[
+      {t:"Ha, albatta ❤️", ok:true},
+      {t:"O'ylab ko'rishim kerak 🤔", ok:false},
+    ]
+  },
+];
+
+const TOASTS = [
+  "Yo'q-yo'q 🙈","Bu tugma uyatchan 😳","Bugun bo'lmaydi 😏",
+  "Faqat to'g'ri javob ❤️","Yo'q endi 😤","Jiddiymi? 😅","Boshqasini bos 💕"
+];
+
+const card = document.getElementById('card');
+const progressEl = document.getElementById('progress');
+let step = 0;
+
+function buildProgress(){
+  progressEl.innerHTML='';
+  for(let i=1;i<SCREENS.length;i++){
+    const d=document.createElement('span');
+    d.className='dot';d.textContent='♡';
+    progressEl.appendChild(d);
+  }
+}
+function updateProgress(){
+  [...progressEl.children].forEach((d,i)=>{
+    if(i < step){d.classList.add('on');d.textContent='♥';}
+    else {d.classList.remove('on');d.textContent='♡';}
+  });
+}
+function render(){
+  const s = SCREENS[step];
+  card.innerHTML='';
+  const wrap=document.createElement('div');
+  wrap.className='screen';
+  if(s.type==="intro"){
+    wrap.innerHTML=`
+      <div class="hand">${s.hand}</div>
+      <h1>${s.title}</h1>
+      <p class="sub">${s.sub}</p>
+      <div class="options"><button class="btn btn-primary" id="go">${s.cta}</button></div>`;
+    wrap.querySelector('#go').addEventListener('click',()=>next());
+  } else {
+    const opts = s.options.map((o)=>{
+      if(o.ok) return `<button class="btn btn-primary" data-ok="1">${o.t}</button>`;
+      return `<button class="btn btn-shy" data-ok="0">${o.t}</button>`;
+    }).join('');
+    wrap.innerHTML=`<p class="q">${s.q}</p><div class="options">${opts}</div>`;
+    wrap.querySelectorAll('.btn').forEach(b=>{
+      if(b.dataset.ok==="1") b.addEventListener('click',()=>next());
+      else bindShy(b);
+    });
+  }
+  card.appendChild(wrap);
+  updateProgress();
+}
+function bindShy(btn){
+  let count=0;
+  const dodge=(e)=>{
+    if(e){e.preventDefault();}
+    count++;
+    const dx=(Math.random()*180-90);
+    const dy=(Math.random()*120-60);
+    btn.style.transform=`translate(${dx}px,${dy}px)`;
+    btn.classList.remove('shake');void btn.offsetWidth;btn.classList.add('shake');
+    toast(TOASTS[Math.floor(Math.random()*TOASTS.length)]);
+    if(count>=3){
+      btn.style.opacity='.25';
+      btn.textContent=btn.textContent.replace(/.$/,'')+' 🚫';
+    }
+  };
+  btn.addEventListener('pointerdown',dodge);
+  btn.addEventListener('pointerenter',()=>{ if(window.matchMedia('(hover:hover)').matches) dodge(); });
+  btn.addEventListener('click',(e)=>{e.preventDefault();});
+}
+let toastTimer;
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),1400);
+}
+function next(){
+  const cur=card.firstElementChild;
+  cur.classList.add('leaving');
+  heartPop();
+  setTimeout(()=>{
+    step++;
+    if(step>=SCREENS.length){reveal();}
+    else render();
+  },300);
+}
+function reveal(){
+  updateProgress();
+  card.innerHTML=`
+    <div class="screen">
+      <div class="reveal-hand">to'g'ri tanlading 💕</div>
+      <div class="reveal-title">Bu — uchrashuv!</div>
+      <div class="ticket">
+        <div class="ticket-top">
+          <div class="ticket-emoji">🥰</div>
+          <div class="ticket-brand">${CONFIG.place}<small>ikki kishilik chipta</small></div>
+        </div>
+        <div class="ticket-rows">
+          <div class="row"><span class="lab">Seans</span><span class="val big">${CONFIG.movie}</span></div>
+          <div class="row"><span class="lab">Qachon</span><span class="val">${CONFIG.date}</span></div>
+          <div class="row"><span class="lab">Vaqt</span><span class="val">${CONFIG.time}</span></div>
+          <div class="row"><span class="lab">Joy</span><span class="val">yonimda ❤️</span></div>
+        </div>
+      </div>
+      <div class="note">Chiroyli bo'lib tayyorlan,<br>qolganini o'zim hal qilaman 💖<br><span style="font-size:17px;opacity:.85">Seni taklif qilyapti — ${CONFIG.myName}</span></div>
+      <button class="replay" id="replay">yana bir bor o'tish</button>
+    </div>`;
+  card.querySelector('#replay').addEventListener('click',()=>{step=0;render();});
+  bigConfetti();
+}
+function heartPop(){
+  for(let i=0;i<6;i++){
+    const p=document.createElement('div');
+    p.className='confetti';p.textContent='❤️';
+    document.body.appendChild(p);
+    flyParticle(p,260);
+  }
+}
+function bigConfetti(){
+  const set=['❤️','💕','💖','✨','🌸','💗','💞'];
+  for(let i=0;i<46;i++){
+    const p=document.createElement('div');
+    p.className='confetti';p.textContent=set[Math.floor(Math.random()*set.length)];
+    p.style.fontSize=(16+Math.random()*16)+'px';
+    document.body.appendChild(p);
+    flyParticle(p,700);
+  }
+}
+function flyParticle(p,spread){
+  const ang=Math.random()*Math.PI*2;
+  const dist=spread*(0.3+Math.random()*0.7);
+  const dx=Math.cos(ang)*dist;
+  const dy=Math.sin(ang)*dist - 120;
+  p.animate([
+    {transform:'translate(-50%,-50%) scale(.4)',opacity:1},
+    {transform:`translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) scale(1) rotate(${Math.random()*360}deg)`,opacity:0}
+  ],{duration:1100+Math.random()*700,easing:'cubic-bezier(.1,.7,.3,1)'});
+  setTimeout(()=>p.remove(),1900);
+}
+function spawnFloaty(){
+  const set=['🤍','💗','💕','✨','🌸'];
+  const f=document.createElement('div');
+  f.className='floaty';
+  f.textContent=set[Math.floor(Math.random()*set.length)];
+  f.style.left=Math.random()*100+'%';
+  f.style.fontSize=(14+Math.random()*16)+'px';
+  f.style.animationDuration=(7+Math.random()*7)+'s';
+  document.getElementById('ambient').appendChild(f);
+  setTimeout(()=>f.remove(),15000);
+}
+if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  setInterval(spawnFloaty,650);
+}
+buildProgress();
+render();
+</script>
+</body>
+</html>
